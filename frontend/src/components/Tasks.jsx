@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 function Tasks() {
 
-  // State to store all tasks
+  //initial value is empty
   const [tasks, setTasks] = useState([])
 
   // State to store form data
