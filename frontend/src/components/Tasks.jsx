@@ -66,7 +66,7 @@ function Tasks() {
             value={form.subject}
             onChange={handleChange}
             placeholder="Subject (e.g. DBMS Assignment)"
-            className="border border-gray-300 rounded-lg px-4 py-2 text-sm w-1/3 focus:outline-none focus:border-indigo-500"
+            className="border border-gray-300 rounded-lg px-4 py-2 text-sm w-1/3 focus:outline-none focus:border-purple-500"
           />
 
           {/* Deadline */}
@@ -93,7 +93,7 @@ function Tasks() {
           {/* Add Button */}
           <button
             onClick={handleAddTask}
-            className="bg-indigo-600 text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700"
+            className="bg-purple-600 text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-purple-700"
           >
             Add Task
           </button>
@@ -124,7 +124,7 @@ function Tasks() {
                 type="checkbox"
                 checked={task.completed}
                 onChange={() => handleComplete(task.id)}
-                className="w-4 h-4 accent-indigo-600"
+                className="w-4 h-4 accent-purple-600"
               />
               <div>
                 <p className={`text-sm font-semibold ${task.completed ? 'line-through text-gray-400' : 'text-gray-800'}`}>
