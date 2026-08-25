@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes import tasks, ai
-
+from routes.ai import router as ai_router
 app = FastAPI()
+app.include_router(ai_router)
+
+
 
 # Fix CORS
 app.add_middleware(

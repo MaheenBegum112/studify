@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import Home from './pages/Home'
-import Tasks from './components/Tasks'
-
+import Home from './Home';
+import StudyPlan from './components/StudyPlan';
+import Tasks from './components/Tasks';
 import Summary from './pages/Summary'
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
           <Route path="/" element={<Home />} />
          <Route path="/tasks"element={<Tasks/>}/>
           <Route path="/Summary" element={<Summary/>}/>
+          <Route path="/plan" element={<StudyPlan/>}/>
         </Routes>
       </div>
     </BrowserRouter>
