@@ -64,7 +64,7 @@ function Home() {
           <img
             src={task}
             alt="Add Your Tasks"
-            className="w-20 h-20  object-contain"
+            className="w-15 h-15 object-contain"
           />
         </div>
 
@@ -74,7 +74,7 @@ function Home() {
 
       </div>
 
-      <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      <h3 className="text-xl font-bold text-gray-800 mt-4 mb-3">
         Add Your Tasks
       </h3>
 
@@ -120,7 +120,7 @@ function Home() {
           <img
             src={ai}
             alt="AI Plans Your Day"
-            className="w-15 h-20  object-contain"
+            className="w-15 h-15  object-contain"
           />
         </div>
 
@@ -130,7 +130,7 @@ function Home() {
 
       </div>
 
-      <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      <h3 className="text-xl font-bold text-gray-800 mt-1 mb-3">
         AI Plans Your Day
       </h3>
 
@@ -176,7 +176,7 @@ function Home() {
           <img
             src={whatsapp}
             alt="WhatsApp Alerts"
-            className="w-18 h-18 object-contain"
+            className="w-15 h-15 object-contain"
           />
         </div>
 
@@ -186,7 +186,7 @@ function Home() {
 
       </div>
 
-      <h3 className="text-2xl font-bold text-gray-800 mt-8 mb-3">
+      <h3 className="text-xl font-bold text-gray-800 mt-3 mb-3">
         Get WhatsApp Alerts
       </h3>
 
