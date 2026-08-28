@@ -3,7 +3,8 @@ import Navbar from './components/Navbar'
 import Home from './Home';
 import StudyPlan from './components/StudyPlan';
 import Tasks from './components/Tasks';
-import Summary from './pages/Summary'
+import Summary from './components/Summary'
+
 
 function App() {
   return (
