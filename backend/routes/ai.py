@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 from database import get_connection
 
+
 load_dotenv()
 
 router = APIRouter()
@@ -62,3 +63,24 @@ Do not use markdown tables. Use simple time slots only.
 
     plan = response.choices[0].message.content
     return JSONResponse(content={"plan": plan})
+@router.post("/notify")
+def send_reminder():
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT * FROM tasks 
+        WHERE completed = FALSE 
+        AND deadline <= DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+    """)
+    urgent_tasks = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    if not urgent_tasks:
+        return {"message": "No urgent tasks!"}
+
+    message = "⚠️ Studify Reminder!\n\nUrgent tasks due soon:\n"
+    for task in urgent_tasks:
+        message += f"📌 {task['subject']} - Due: {task['deadline']} ({task['priority']} priority)\n"
+    message += "\n📚 Open Studify to plan your day!"
+

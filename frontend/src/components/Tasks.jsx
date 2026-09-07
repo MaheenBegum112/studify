@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import API from '../api'
 
+
 function Tasks() {
   const [tasks, setTasks] = useState([])
   const [form, setForm] = useState({
@@ -9,7 +10,7 @@ function Tasks() {
     priority: 'High'
   })
 
-  // Define fetchTasks BEFORE useEffect
+  
   async function fetchTasks() {
     try {
       const response = await API.get('/tasks')
@@ -55,6 +56,18 @@ function Tasks() {
       console.log(error)
     }
   }
+async function sendReminder() {
+  try {
+    const response = await API.post('/notify')
+    alert('WhatsApp reminder sent! 📱')
+  } catch(error) {
+    console.error('Backend Error:', error.response?.data || error.message)
+    alert('Failed to send notification. Please check server logs.')
+  }
+}
+
+
+
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -64,7 +77,7 @@ function Tasks() {
     <div className="px-20 py-10">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">📝 My Tasks</h1>
 
-      {/* Add Task Form */}
+      
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
         <h2 className="text-lg font-bold text-gray-700 mb-4">Add New Task</h2>
         <div className="flex gap-4">
@@ -116,6 +129,8 @@ function Tasks() {
           </div>
         ))}
       </div>
+  
+
     </div>
   )
 }

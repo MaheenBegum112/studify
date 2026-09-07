@@ -9,13 +9,16 @@ function Summary() {
   }, []);
 
   const fetchTasks = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/tasks");
-      setTasks(response.data);
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-    }
-  };
+  try {
+    const response = await axios.get("http://localhost:8000/tasks");
+
+    console.log("TASKS FROM BACKEND:", response.data);
+
+    setTasks(response.data);
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+  }
+};
 
   const totalTasks = tasks.length;
 
@@ -32,10 +35,9 @@ function Summary() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
-
-      {/* Header */}
       <div className="max-w-6xl mx-auto">
 
+        {/* Header */}
         <h1 className="text-3xl font-bold text-gray-800">
           Study Summary
         </h1>
@@ -104,55 +106,59 @@ function Summary() {
 
         </div>
 
-        {/* Task List */}
-        <div className="bg-white rounded-xl shadow p-6 mt-8">
+       {/* Task List */}
+<div className="bg-white rounded-xl shadow p-6 mt-8">
 
-          <h2 className="text-xl font-semibold text-gray-800 mb-5">
-            Your Tasks
-          </h2>
+  <h2 className="text-xl font-semibold text-gray-800 mb-5">
+    Your Tasks
+  </h2>
 
-          {tasks.length === 0 ? (
-            <p className="text-gray-500">
-              No tasks available.
+  {tasks.length === 0 ? (
+    <p className="text-gray-500">
+      No tasks available.
+    </p>
+  ) : (
+    <div className="space-y-3">
+
+      {tasks.map((task) => (
+        <div
+          key={task.id}
+          className="flex justify-between items-center border-b pb-3"
+        >
+
+          {/* Task Details */}
+          <div>
+            <p className="font-medium text-gray-800">
+              {task.subject}
             </p>
-          ) : (
-            <div className="space-y-3">
 
-              {tasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="flex justify-between items-center border-b pb-3"
-                >
+            <p className="text-sm text-gray-500 mt-1">
+              Deadline: {task.deadline}
+            </p>
 
-                  <div>
-                    <p className="font-medium text-gray-800">
-                      {task.title}
-                    </p>
+            <p className="text-sm text-gray-500">
+              Priority: {task.priority}
+            </p>
+          </div>
 
-                    {task.description && (
-                      <p className="text-sm text-gray-500">
-                        {task.description}
-                      </p>
-                    )}
-                  </div>
-
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm ${
-                      task.completed
-                        ? "bg-green-100 text-green-700"
-                        : "bg-orange-100 text-orange-700"
-                    }`}
-                  >
-                    {task.completed ? "Completed" : "Pending"}
-                  </span>
-
-                </div>
-              ))}
-
-            </div>
-          )}
+          {/* Status */}
+          <span
+            className={`px-3 py-1 rounded-full text-sm ${
+              task.completed
+                ? "bg-green-100 text-green-700"
+                : "bg-orange-100 text-orange-700"
+            }`}
+          >
+            {task.completed ? "Completed" : "Pending"}
+          </span>
 
         </div>
+      ))}
+
+    </div>
+  )}
+
+</div>
 
       </div>
     </div>
@@ -160,3 +166,4 @@ function Summary() {
 }
 
 export default Summary;
+
