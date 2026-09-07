@@ -27,13 +27,7 @@ def generate_plan():
     for task in pending_tasks:
         task_list += f"- {task['subject']} (Deadline: {task['deadline']}, Priority: {task['priority']})\n"
 
-    # prompt = f"""
-    # I am a student with these pending tasks:
-    # {task_list}
-    # Generate a detailed hourly study plan for today.
-    # Format it clearly with times like:
-    # 9:00 AM - 11:00 AM: Study [subject]
-    # """
+    
     prompt = f"""
 I am a student with these pending tasks:
 {task_list}
