@@ -102,7 +102,7 @@ async function sendReminder() {
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <h2 className="text-lg font-bold text-gray-700 mb-4">Your Tasks</h2>
         {tasks.length === 0 && (
-          <p className="text-gray-400 text-sm text-center py-8">No tasks yet! 📝</p>
+          <p className="text-gray-400 text-sm text-center py-8">Loading tasks 📝</p>
         )}
         {tasks.map(task => (
           <div key={task.id} className="flex justify-between items-center border-b border-gray-100 py-4 last:border-0">

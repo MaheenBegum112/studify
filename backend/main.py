@@ -1,3 +1,4 @@
+from routes.tasks import router as tasks_router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes import tasks, ai
