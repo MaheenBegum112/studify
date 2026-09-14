@@ -3,6 +3,7 @@ import task from './assets/task.png'
 import ai from './assets/ai.png'
 import studifyhero from './assets/studifyhero.png'
 import countdown from './assets/countdown.png'
+import logo from './assets/logo.png'
 
 function Home() {
   return (
@@ -342,10 +343,7 @@ function Home() {
           {/* FEATURE 4 */}
           <div className="bg-white rounded-xl p-6 shadow-sm">
 
-            <div className="text-3xl mb-3">
-              📊
-            </div>
-
+          <div className="text-3xl mb-3">📊</div>
             <h3 className="text-lg font-bold text-gray-800 mb-2">
               Weekly Summary
             </h3>
@@ -372,7 +370,7 @@ function Home() {
 
           {/* LOGO */}
           <div className="text-xl font-bold text-purple-400">
-            📚 Studify
+           <img src={logo} alt="Studify Logo" className="h-14 " />
           </div>
 
           {/* COPYRIGHT */}
