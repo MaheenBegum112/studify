@@ -1,10 +1,11 @@
-from routes.tasks import router as tasks_router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from routes import tasks, ai
 
 app = FastAPI()
 
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -16,6 +17,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Routes
 app.include_router(tasks.router)
 app.include_router(ai.router)
 
