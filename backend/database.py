@@ -4,7 +4,6 @@ import os
 
 load_dotenv()
 
-
 def get_connection():
     connection = mysql.connector.connect(
         host=os.getenv("DB_HOST"),

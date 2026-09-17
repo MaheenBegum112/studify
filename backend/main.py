@@ -5,11 +5,11 @@ from routes import tasks, ai
 
 app = FastAPI()
 
-# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
+        "http://localhost:5174",
         "https://studify-black.vercel.app"
     ],
     allow_credentials=True,
@@ -17,10 +17,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routes
 app.include_router(tasks.router)
 app.include_router(ai.router)
-
 
 @app.get("/")
 def home():
