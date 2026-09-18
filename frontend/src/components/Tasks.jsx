@@ -100,24 +100,7 @@ function Tasks() {
     }
   }
 
-  // Send Reminder
-  async function sendReminder() {
-    try {
-      await API.post('/notify')
-
-      alert('WhatsApp reminder sent! 📱')
-
-    } catch (error) {
-      console.error(
-        'Backend Error:',
-        error.response?.data || error.message
-      )
-
-      alert(
-        'Failed to send notification. Please check server logs.'
-      )
-    }
-  }
+  
 
   // Handle form changes
   function handleChange(e) {

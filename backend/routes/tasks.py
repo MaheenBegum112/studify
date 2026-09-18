@@ -23,14 +23,23 @@ def get_tasks():
 def add_task(task: Task):
     conn = get_connection()
     cursor = conn.cursor()
+
     cursor.execute("""
         INSERT INTO tasks (subject, deadline, priority, completed)
         VALUES (%s, %s, %s, %s)
     """, (task.subject, task.deadline, task.priority, False))
+
     conn.commit()
+
+    new_id = cursor.lastrowid
+
     cursor.close()
     conn.close()
-    return {"message": "Task added! ✅"}
+
+    return {
+        "message": "Task added! ✅",
+        "id": new_id
+    }
 
 @router.put("/tasks/{task_id}")
 def update_task(task_id: int, task: dict):
