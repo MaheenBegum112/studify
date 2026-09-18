@@ -34,29 +34,35 @@ function Tasks() {
   }, [])
 
   // Add Task
-  async function handleAddTask() {
-    if (form.subject === '' || form.deadline === '') {
-      alert('Please fill all fields!')
-      return
-    }
-
-    try {
-      await API.post('/tasks', form)
-
-      // Refresh task list
-      await fetchTasks()
-
-      // Clear form
-      setForm({
-        subject: '',
-        deadline: '',
-        priority: 'High'
-      })
-
-    } catch (error) {
-      console.log(error)
-    }
+ async function handleAddTask() {
+  if (form.subject === '' || form.deadline === '') {
+    alert('Please fill all fields!')
+    return
   }
+
+  try {
+    const response = await API.post('/tasks', form)
+
+    const newTask = {
+      id: response.data.id,
+      subject: form.subject,
+      deadline: form.deadline,
+      priority: form.priority,
+      completed: false
+    }
+
+    setTasks(prevTasks => [...prevTasks, newTask])
+
+    setForm({
+      subject: '',
+      deadline: '',
+      priority: 'High'
+    })
+
+  } catch (error) {
+    console.log(error)
+  }
+}
 
   // Complete / Uncomplete Task
   async function handleComplete(id, completed) {
