@@ -13,7 +13,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+@app.get("/")
+def home():
+    return {"message": "Studify API is running"}
 # Include routers AFTER CORS middleware
 from routes.tasks import router as tasks_router
 
