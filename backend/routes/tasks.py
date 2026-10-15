@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
+from typing import Optional
 from database import get_connection
 
 router = APIRouter()
@@ -11,53 +12,122 @@ class Task(BaseModel):
 
 @router.get("/tasks")
 def get_tasks():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM tasks")
-    tasks = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return tasks
+    conn = None
+    cursor = None
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM tasks ORDER BY completed ASC, deadline ASC, id DESC")
+        tasks = cursor.fetchall()
+        return tasks
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch tasks: {str(e)}")
+    finally:
+        if cursor:
+            try:
+                cursor.close()
+            except Exception:
+                pass
+        if conn:
+            try:
+                conn.close()
+            except Exception:
+                pass
 
 @router.post("/tasks")
 def add_task(task: Task):
-    conn = get_connection()
-    cursor = conn.cursor()
+    conn = None
+    cursor = None
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
 
-    cursor.execute("""
-        INSERT INTO tasks (subject, deadline, priority, completed)
-        VALUES (%s, %s, %s, %s)
-    """, (task.subject, task.deadline, task.priority, False))
+        cursor.execute("""
+            INSERT INTO tasks (subject, deadline, priority, completed)
+            VALUES (%s, %s, %s, %s)
+        """, (task.subject, task.deadline, task.priority, False))
 
-    conn.commit()
+        conn.commit()
+        new_id = cursor.lastrowid
 
-    new_id = cursor.lastrowid
-
-    cursor.close()
-    conn.close()
-
-    return {
-        "message": "Task added! ✅",
-        "id": new_id
-    }
+        return {
+            "message": "Task added! ✅",
+            "id": new_id
+        }
+    except Exception as e:
+        if conn:
+            try:
+                conn.rollback()
+            except Exception:
+                pass
+        raise HTTPException(status_code=500, detail=f"Failed to add task: {str(e)}")
+    finally:
+        if cursor:
+            try:
+                cursor.close()
+            except Exception:
+                pass
+        if conn:
+            try:
+                conn.close()
+            except Exception:
+                pass
 
 @router.put("/tasks/{task_id}")
 def update_task(task_id: int, task: dict):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("UPDATE tasks SET completed = %s WHERE id = %s",
-        (task["completed"], task_id))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return {"message": "Task updated! ✅"}
+    conn = None
+    cursor = None
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        completed_val = bool(task.get("completed", False))
+        cursor.execute("UPDATE tasks SET completed = %s WHERE id = %s", (completed_val, task_id))
+        conn.commit()
+        return {"message": "Task updated! ✅"}
+    except Exception as e:
+        if conn:
+            try:
+                conn.rollback()
+            except Exception:
+                pass
+        raise HTTPException(status_code=500, detail=f"Failed to update task: {str(e)}")
+    finally:
+        if cursor:
+            try:
+                cursor.close()
+            except Exception:
+                pass
+        if conn:
+            try:
+                conn.close()
+            except Exception:
+                pass
 
 @router.delete("/tasks/{task_id}")
 def delete_task(task_id: int):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM tasks WHERE id = %s", (task_id,))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return {"message": "Task deleted! ✅"}
+    conn = None
+    cursor = None
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM tasks WHERE id = %s", (task_id,))
+        conn.commit()
+        return {"message": "Task deleted! ✅"}
+    except Exception as e:
+        if conn:
+            try:
+                conn.rollback()
+            except Exception:
+                pass
+        raise HTTPException(status_code=500, detail=f"Failed to delete task: {str(e)}")
+    finally:
+        if cursor:
+            try:
+                cursor.close()
+            except Exception:
+                pass
+        if conn:
+            try:
+                conn.close()
+            except Exception:
+                pass

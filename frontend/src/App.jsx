@@ -13,9 +13,10 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-         <Route path="/tasks"element={<Tasks/>}/>
-          <Route path="/Summary" element={<Summary/>}/>
-          <Route path="/plan" element={<StudyPlan/>}/>
+          <Route path="/tasks" element={<Tasks />} />
+          <Route path="/summary" element={<Summary />} />
+          <Route path="/Summary" element={<Summary />} />
+          <Route path="/plan" element={<StudyPlan />} />
         </Routes>
       </div>
     </BrowserRouter>

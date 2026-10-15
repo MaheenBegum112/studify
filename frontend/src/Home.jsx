@@ -402,6 +402,13 @@ function Home() {
               Study Plan
             </Link>
 
+            <Link
+              to="/summary"
+              className="text-gray-400 text-sm hover:text-white"
+            >
+              Summary
+            </Link>
+
           </div>
 
         </div>
